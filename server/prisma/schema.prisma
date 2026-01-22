@@ -6,6 +6,7 @@ datasource db {
   provider = "postgresql"
 }
 
+
 model User {
   id        String   @id @default(uuid())
   name      String
@@ -13,7 +14,6 @@ model User {
   password  String
   createdAt DateTime @default(now())
   orders    Order[]
-
   @@map("users")
 }
 
@@ -21,7 +21,6 @@ model Category {
   id    String @id @default(uuid())
   name  String @unique
   games Game[]
-
   @@map("categories")
 }
 
@@ -33,12 +32,9 @@ model Game {
   thumbnail   String
   stock       Int      @default(0)
   platform    String   
-  
   categoryId  String
   category    Category @relation(fields: [categoryId], references: [id])
-  
   createdAt   DateTime @default(now())
-
   @@map("games")
 }
 
@@ -46,11 +42,8 @@ model Order {
   id        String   @id @default(uuid())
   total     Float
   status    String   @default("PENDING") 
-  
   userId    String
   user      User     @relation(fields: [userId], references: [id])
-  
   createdAt DateTime @default(now())
-
   @@map("orders")
 }
